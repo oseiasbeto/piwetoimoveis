@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Piweto Imóveis - Corretora de Imóveis em Angola. Compre, venda ou alugue com segurança.">
+    <meta property="og:title" content="Piweto Imóveis - Corretora de Imóveis">
+    <meta property="og:description" content="Encontre a casa dos seus sonhos em Angola">
+    <meta property="og:image" content="/assets/banner2.png">
+    <link rel="icon" type="image/png" href="./assets//icon.png">
+    <title>Piweto Imóveis - Corretora de Imóveis em Angola</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Swiper.js CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 166, 81, 0.82), rgba(0, 166, 81, 0.88)), url('https://picsum.photos/id/1015/2000/1200');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .property-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .property-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 65px;
+            height: 65px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.5);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.4s ease-in-out;
+        }
+        
+        .mobile-menu.open {
+            transform: translateY(0);
+        }
+        
+        /* Hero Adjustments */
+        .hero-content {
+            text-align: left;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img class="w-40" src="./assets/Imoveis.png" 
+                     alt="Logo" class="h-11 w-auto">
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#" onclick="smoothScroll('home')" class="hover:text-[#00A651] transition-colors">Início</a>
+                <a href="#" onclick="smoothScroll('imoveis')" class="hover:text-[#00A651] transition-colors">Imóveis</a>
+                <a href="#" onclick="smoothScroll('sobre')" class="hover:text-[#00A651] transition-colors">Sobre Nós</a>
+                <a href="#" onclick="smoothScroll('contato')" class="hover:text-[#00A651] transition-colors">Contato</a>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button onclick="window.location.href='https://forms.gle/Nnr9hdhraB3U3UKm7'" 
+                        class="hidden md:flex bg-[#F9C74F] hover:bg-yellow-400 text-gray-900 px-6 py-3 rounded-2xl font-semibold transition-all items-center gap-2">
+                    <i class="fas fa-plus"></i>
+                    Anunciar Imóvel
+                </button>
+                
+                <!-- Hamburger -->
+                <button id="hamburger" class="md:hidden text-3xl text-gray-700">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- MOBILE MENU -->
+        <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-white z-40 pt-20 hidden md:hidden overflow-y-auto">
+            <div class="flex justify-end px-6 py-4">
+                <button id="close-menu" class="text-4xl text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="flex flex-col items-center gap-8 text-2xl font-medium py-10">
+                <a href="#" onclick="navigateTo('home')" class="hover:text-[#00A651]">Início</a>
+                <a href="#" onclick="navigateTo('imoveis')" class="hover:text-[#00A651]">Imóveis</a>
+                <a href="#" onclick="navigateTo('sobre')" class="hover:text-[#00A651]">Sobre Nós</a>
+                <a href="#" onclick="navigateTo('contato')" class="hover:text-[#00A651]">Contato</a>
+                
+                <button onclick="window.location.href='https://forms.gle/Nnr9hdhraB3U3UKm7'; toggleMobileMenu()" 
+                        class="mt-8 bg-[#F9C74F] hover:bg-yellow-400 text-gray-900 px-12 py-4 rounded-2xl font-semibold">
+                    Anunciar Imóvel
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO - Alinhado à esquerda -->
+    <section id="home" class="hero-bg h-screen flex items-center text-white">
+        <div class="max-w-7xl mx-auto px-6 pt-20 w-full">
+            <div class="hero-content max-w-2xl">
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6">
+                    Encontre a casa<br>dos seus sonhos
+                </h1>
+                <p class="text-xl md:text-2xl mb-10 text-white/90">
+                    A sua corretora de imóveis de confiança em Angola
+                </p>
+                <div class="hero-buttons flex flex-col md:flex-row gap-4">
+                    <button onclick="document.getElementById('imoveis-section').scrollIntoView({ behavior: 'smooth' })" 
+                            class="bg-white text-[#00A651] px-8 py-4 rounded-2xl text-lg font-semibold hover:bg-gray-100 transition-all">
+                        Ver Imóveis
+                    </button>
+                    <button onclick="window.location.href='https://forms.gle/Nnr9hdhraB3U3UKm7'" 
+                            class="border-2 border-white text-white hover:bg-white hover:text-[#00A651] px-8 py-4 rounded-2xl text-lg font-semibold transition-all">
+                        Anunciar Imóvel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMÓVEIS EM DESTAQUE -->
+    <section id="imoveis-section" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <span class="text-[#00A651] font-semibold tracking-widest">DESTAQUES</span>
+                    <h2 class="text-4xl font-bold mt-2">Imóveis em Destaque</h2>
+                </div>
+                <!-- 
+                <a href="imoveis.html" class="text-[#00A651] hover:underline font-medium flex items-center gap-2">
+                    Ver todos <i class="fas fa-arrow-right"></i>
+                </a>-->
+            </div>
+            
+            <!-- SWIPER CAROUSEL -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper" id="swiper-wrapper">
+                    <!-- Populated by JS -->
+                </div>
+                <div class="swiper-pagination mt-8"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Restante das seções (Sobre, Serviços, CTA, Contato, Footer) mantidas iguais -->
+    <!-- SOBRE -->
+    <section id="sobre" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="inline-block px-4 py-1.5 bg-green-100 text-green-700 text-sm font-semibold rounded-3xl mb-4">SOBRE NÓS</span>
+                    <h2 class="text-5xl font-bold leading-tight mb-8">A sua corretora de imóveis com excelência em Angola</h2>
+                    <p class="text-lg text-gray-600 mb-8">Com anos de experiência no mercado imobiliário, a Piweto Imóveis destaca-se pela transparência, profissionalismo e dedicação.</p>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div><div class="text-4xl font-bold text-green-600 mb-1">98%</div><div class="text-gray-500">Taxa de satisfação</div></div>
+                        <div><div class="text-4xl font-bold text-green-600 mb-1">2+</div><div class="text-gray-500">Anos de experiência</div></div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://picsum.photos/id/1016/800/600" alt="Equipe" class="rounded-3xl shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Outras seções (SERVIÇOS, CTA, CONTATO, FOOTER) permanecem como no código anterior -->
+     <!-- SERVIÇOS -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-center text-4xl font-bold mb-4">Nossos Serviços</h2>
+            <p class="text-center text-gray-500 max-w-md mx-auto mb-16">Soluções completas para o seu investimento imobiliário</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white border border-gray-100 p-8 rounded-3xl hover:border-green-200 transition-all group">
+                    <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-exchange-alt text-green-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3">Compra e Venda</h3>
+                    <p class="text-gray-600">Assessoria completa na compra e venda de imóveis residenciais e comerciais.</p>
+                </div>
+                <div class="bg-white border border-gray-100 p-8 rounded-3xl hover:border-green-200 transition-all group">
+                    <div class="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" class="w-8 h-8" version="1.1" id="Layer_1" viewBox="0 0 512 512" xml:space="preserve">
+<g>
+	<g>
+		<path d="M368.08,90.944l-67.065-9.744l-29.992-60.771c-6.116-12.393-23.836-12.386-29.949,0l-29.992,60.771l-67.065,9.744    c-13.676,1.987-19.145,18.842-9.254,28.483l48.529,47.304l-11.457,66.794c-2.337,13.618,12.003,24.034,24.229,17.604    l59.984-31.535l59.984,31.535c12.127,6.377,26.583-3.879,24.229-17.604l-11.456-66.794l48.529-47.304    C387.231,109.78,381.748,92.931,368.08,90.944z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M120.435,253.713H16.699C7.477,253.713,0,261.189,0,270.411v213.754c0,9.222,7.477,16.699,16.699,16.699h103.736    c9.222,0,16.699-7.476,16.699-16.699V270.411C137.134,261.189,129.657,253.713,120.435,253.713z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M501.108,326.303c-18.077-22.784-51.249-26.096-73.456-7.46l-79.113,66.383c-24.799,0-44.492,0-67.177,0l35.938-30.155    c27.34-22.941,12.375-68.954-24.879-68.954H170.532v198.715c8.896,7.193,20.04,11.154,31.496,11.154h156.498    c11.757,0,23.192-4.161,32.201-11.719l102.571-86.061C514.766,380.19,518.272,347.935,501.108,326.303z"/>
+	</g>
+</g>
+</svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3">Avaliação</h3>
+                    <p class="text-gray-600">Avaliações precisas e profissionais do seu imóvel.</p>
+                </div>
+                <div class="bg-white border border-gray-100 p-8 rounded-3xl hover:border-green-200 transition-all group">
+                    <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform"><i class="fas fa-key text-green-600"></i></div>
+                    <h3 class="text-2xl font-semibold mb-3">Aluguéis</h3>
+                    <p class="text-gray-600">Gestão completa de locações com segurança.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-gradient-to-r from-green-700 to-green-600 text-white">
+        <div class="max-w-4xl mx-auto text-center px-6">
+            <h2 class="text-5xl font-bold mb-6">Quer vender ou alugar seu imóvel?</h2>
+            <p class="text-xl mb-10 opacity-90">Preencha o formulário e nossa equipe entrará em contato rapidamente.</p>
+            <button onclick="window.location.href='https://forms.gle/Nnr9hdhraB3U3UKm7'" 
+                    class="bg-white text-green-700 hover:bg-yellow-300 hover:text-gray-900 text-xl font-bold px-12 py-6 rounded-3xl transition-all inline-flex items-center gap-4">
+                <span>ANUNCIAR AGORA</span>
+                <i class="fas fa-arrow-right text-2xl"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="py-20 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16">
+            <div>
+                <h2 class="text-4xl font-bold mb-8">Vamos conversar?</h2>
+                <div class="space-y-8">
+                    <div class="flex gap-6">
+                        <div class="w-12 h-12 bg-green-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold">Call Center</div>
+                            <a href="tel:+244935684096" class="text-3xl font-bold hover:text-green-400">935 684 096</a>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-12 h-12 bg-green-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold">WhatsApp</div>
+                            <a href="https://wa.me/244948360831" target="_blank" class="text-3xl font-bold hover:text-green-400">948 360 831</a>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-12 h-12 bg-green-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold">Email</div>
+                            <a href="mailto:imoveis@piweto.it.ao" class="text-xl hover:text-green-400">imoveis@piweto.it.ao</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white/10 backdrop-blur-lg p-8 rounded-3xl">
+                <h3 class="font-semibold mb-6 text-xl">Siga-nos</h3>
+                <div class="flex gap-6 text-4xl">
+                    <a href="https://facebook.com/piwetomoves" target="_blank" class="hover:text-yellow-300 transition-colors"><i class="fab fa-facebook"></i></a>
+                    <a href="https://instagram.com/piwetoimoveis" target="_blank" class="hover:text-yellow-300 transition-colors"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gradient-to-br from-green-700 to-green-800 text-white py-16">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-12">
+            <div class="md:col-span-5">
+                <div class="flex items-center gap-3 mb-6">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDgwIDgwIiBmaWxsPSJub25lIj48cGF0aCBkPSJNMjAgMTBIMzBMMzUgMjVMMjAgNDBaIiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTQwIDEwSDUwTDU1IDI1TDQwIDQwWiIgZmlsbD0iI0Y5Qzc0RiIvPjwvc3ZnPg==" alt="Logo" class="h-12">
+                    <span class="text-4xl font-bold">Imóveis</span>
+                </div>
+                <p class="text-white/70">Transformando sonhos em lares angolanos.</p>
+            </div>
+            
+            <div class="md:col-span-2">
+                <div class="font-semibold mb-6">Empresa</div>
+                <div class="space-y-3 text-sm">
+                    <div>Sobre Nós</div>
+                    <div>Equipe</div>
+                </div>
+            </div>
+            
+            <div class="md:col-span-2">
+                <div class="font-semibold mb-6">Imóveis</div>
+                <div class="space-y-3 text-sm">
+                    <div>Comprar</div>
+                    <div>Vender</div>
+                    <div>Alugar</div>
+                </div>
+            </div>
+            
+            <div class="md:col-span-3">
+                <div class="font-semibold mb-6">Contato Rápido</div>
+                <div class="flex flex-col gap-2 text-sm">
+                    <a href="tel:+244935684096" class="flex items-center gap-3 hover:text-yellow-300">935 684 096</a>
+                    <a href="https://wa.me/244948360831" target="_blank" class="flex items-center gap-3 hover:text-yellow-300">948 360 831</a>
+                    <a href="mailto:imoveis@piweto.it.ao" class="flex items-center gap-3 hover:text-yellow-300">imoveis@piweto.it.ao</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-white/20 text-xs text-white/60 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>© 2026 Piweto Imóveis. Todos os direitos reservados.</div>
+            <div>Lunda-sul, Angola</div>
+        </div>
+    </footer>
+    <!-- WHATSAPP FLOATING BUTTON -->
+    <a href="https://wa.me/244948360831" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Properties
+        const properties = [
+            { id: 1, title: "Apartamento em aluguel no Txizainga 1", price: "200.000,00", location: "Txizainga 1, Lunda-sul", image: "./assets/imoveis/I1.jpg", type: "Apartamento", bedrooms: 3, area: "145m²" },
+            { id: 2, title: "Terreno à Venda nos Painéis Solares, Cassengo, Cassengo", price: "1.000.000,00", location: " Painéis Solares, Cassengo", image: "./assets/imoveis/I2.jpg", type: "Terreno", bedrooms: 5, area: "420m²" },
+            { id: 3, title: "Casa à Venda - Txizainga 2, Cassengo", price: "7.000.000,00", location: "Txizainga 2, Cassengo", image: "./assets/imoveis/I3.jpg", type: "Casa", bedrooms: 0, area: "850m²" }
+        ];
+ // Número do WhatsApp da corretora
+
+        const WHATSAPP_NUMBER = "244948360831";
+
+
+
+        // Função para criar mensagem personalizada com base nas informações do imóvel
+
+        function createWhatsAppMessage(property) {
+
+            // Formata o preço para exibição
+            const formattedPrice = parseFloat(property.price).toLocaleString('pt-AO');
+
+            let message = `Olá! Tenho interesse em adquirir o seguinte imóvel:%0A%0A`;
+
+            message += `🏠 *${property.title}*%0A`;
+            message += `📍 *Localização:* ${property.location}%0A`;
+            message += `💰 *Preço:* ${formattedPrice} AOA%0A`;
+            message += `🏷️ *Tipo:* ${property.type}%0A`;
+            message += `🛏️ *Quartos:* ${property.bedrooms}%0A`;
+            message += `📐 *Área:* ${property.area}%0A%0A`;
+            message += `Gostaria de obter mais informações sobre este imóvel. Aguardo contato!`;
+
+            return message;
+
+        }
+
+
+
+        // Função para redirecionar para o WhatsApp com a mensagem do imóvel
+
+        function sendToWhatsApp(property) {
+
+            const message = createWhatsAppMessage(property);
+
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+
+            window.open(whatsappUrl, '_blank');
+
+        }
+
+
+
+        // Função chamada ao clicar no card do imóvel
+
+        function viewProperty(id) {
+            const property = properties.find(p => p.id === id);
+            if (property) {
+                sendToWhatsApp(property);
+            } else {
+                alert("Imóvel não encontrado.");
+            }
+        }
+
+
+
+        // Render Swiper Carousel
+
+        function renderSwiper() {
+            const wrapper = document.getElementById('swiper-wrapper');
+            wrapper.innerHTML = '';
+
+            properties.forEach(prop => {
+
+                const slide = `
+
+                    <div class="swiper-slide">
+
+                        <div onclick="viewProperty(${prop.id})" class="property-card bg-white rounded-3xl overflow-hidden cursor-pointer mx-2">
+
+                            <div class="relative">
+
+                                <img src="${prop.image}" class="w-full h-56 object-cover">
+
+                                <div class="absolute top-4 right-4 bg-white px-3 py-1 text-xs font-bold text-[#00A651] rounded-3xl shadow">${prop.type}</div>
+
+                            </div>
+
+                            <div class="p-5">
+
+                                <h4 class="font-semibold text-lg leading-tight mb-1">${prop.title}</h4>
+
+                                <p class="text-gray-500 text-sm mb-3">${prop.location}</p>
+
+                                <div class="flex justify-between items-end">
+
+                                    <div>
+
+                                        <span class="text-xs text-gray-500">A partir de</span>
+
+                                        <div class="text-2xl font-bold text-[#00A651]">${prop.price} AOA</div>
+
+                                    </div>
+
+                                    <div class="text-right text-xs">
+
+                                        <div>${prop.bedrooms} <i class="fas fa-bed"></i></div>
+
+                                        <div>${prop.area}</div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+                wrapper.innerHTML += slide;
+
+            });
+
+        }
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            setTimeout(() => menu.classList.toggle('open'), 10);
+        }
+
+        function navigateTo(section) {
+            toggleMobileMenu();
+            setTimeout(() => smoothScroll(section), 400);
+        }
+
+        function smoothScroll(section) {
+            if (section === 'home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                const el = document.getElementById(section);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Initialize
+        window.onload = () => {
+            renderSwiper();
+            
+            // Initialize Swiper com autoplay
+        new Swiper('.mySwiper', {
+    loop: true,
+    slidesPerView: 1,
+    spaceBetween: 20,
+    autoplay: {
+        delay: 3000,  // 3 segundos entre cada slide
+        disableOnInteraction: false,  // Continua autoplay mesmo após interação do usuário
+        pauseOnMouseEnter: true,  // Pausa quando o mouse está sobre o carrossel
+    },
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+    breakpoints: {
+        640: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 }
+    }
+});
+
+            // Mobile Menu
+            document.getElementById('hamburger').addEventListener('click', toggleMobileMenu);
+            document.getElementById('close-menu').addEventListener('click', toggleMobileMenu);
+        };
+    </script>
+</body>
+</html>
